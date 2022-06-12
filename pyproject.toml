@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "pygame-widgets-plus"
+version = "0.1.2"
+description = "Adds widgets to pygame; see pygame_widgets for inspiration"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/JBas/pygame_widgets_plus"
+authors = ["Joshua Bas <joshua.n.bas@gmail.com>"]
+include = [
+    "LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8.0,<3.9"
+# numpy = "^1.22.2"
+pygame = "^2.1.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
