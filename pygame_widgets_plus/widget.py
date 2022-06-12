@@ -1,20 +1,35 @@
 from abc import ABC, abstractmethod
 
+import pygame
+
 class WidgetBase(ABC):
-    def __init__(self):
+    def __init__(self, surface, x, y, width, height,
+                 onMouseClicked=None, onMouseClickedArgs=None,
+                 onMousePressed=None, onMousePressedArgs=None,
+                 onMouseReleased=None, onMouseReleasedArgs=None,
+                 onMouseMoved=None, onMouseMovedArgs=None):
         super().__init__()
-        self._x = 0
-        self._y = 0
+        self._surface = surface
+        self._x = x
+        self._y = y
+        self._width = width
+        self._height = height
+
+        self._rect = pygame.Rect(x, y, width, height)
+        
         self._value = None
+            
+        self._onMouseClicked = onMouseClicked
+        self._onMouseClickedArgs = onMouseClickedArgs
         
-        self._onMousePressed = None
-        self._onMousePressedArgs = None
+        self._onMousePressed = onMousePressed
+        self._onMousePressedArgs = onMousePressedArgs
         
-        self._onMouseReleased = None
-        self._onMouseReleasedArgs = None
+        self._onMouseReleased = onMouseReleased
+        self._onMouseReleasedArgs = onMouseReleasedArgs
         
-        self._onMouseMoved = None
-        self._onMouseMovedArgs = None
+        self._onMouseMoved = onMouseMoved
+        self._onMouseMovedArgs = onMouseMovedArgs
         
         self._show = True
         pass
@@ -32,9 +47,14 @@ class WidgetBase(ABC):
         self._value = value
 
     @abstractmethod
+    def doesCollide(self, x, y):
+        pass
+
+    @abstractmethod
     def update(self):
         pass
     
     @abstractmethod
     def draw(self):
         pass
+    

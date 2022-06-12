@@ -1,5 +1,7 @@
 from pygame_widgets_plus import *
-from pygame_widgets_plus.mouse import MouseHandler
+
+def output(self):
+    print("WooHoo!")
 
 def test_version():
     assert __version__ == '0.1.0'
@@ -10,23 +12,27 @@ def test_button():
 
 if __name__=="__main__":
     import pygame
+    
     pygame.init()
 
     screen = pygame.display.set_mode((600, 400))
     clock = pygame.time.Clock()
-    pygame.display.set_caption("pygame Stars Example")
-    white = 255, 240, 200
-    black = 20, 20, 40
-    screen.fill(black)
+
+    b = Button(screen, 20, 20, 100, 100, text="Button", defaultColor="purple", hoverColor="orange", pressColor="black", borderWidth=3, onMousePressed=output)
 
     # main game loop
     done = 0
     while not done:
-        for e in pygame.event.get():
-            if e.type == pygame.QUIT or (e.type == pygame.KEYUP and e.key == pygame.K_ESCAPE):
-                done = 1
-                break
+        screen.fill("white")
 
+        EventManager.update(pygame.event.get())
+
+        
+        b.update()
+        b.draw()
+
+        pygame.display.flip()
+        
         clock.tick(50)
     pygame.quit()
 
