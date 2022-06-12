@@ -18,17 +18,17 @@ if __name__=="__main__":
     screen = pygame.display.set_mode((600, 400))
     clock = pygame.time.Clock()
 
-    b = Toggle(screen, 20, 20, 100, 50)
+    b = Button(screen, 20, 20, 100, 50, onMouseClicked=output)
 
     # main game loop
     done = 0
     while not done:
         screen.fill("white")
 
-        EventManager.update(pygame.event.get())
-
-        b.update()
-        b.draw()
+        for e in pygame.event.get():
+            EventManager.update(e)
+            WidgetManager.update()
+        WidgetManager.draw()
 
         pygame.display.flip()
         

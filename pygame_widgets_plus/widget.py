@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from pygame_widgets_plus.manager import WidgetManager
+
 import pygame
 
 class WidgetBase(ABC):
@@ -18,7 +20,7 @@ class WidgetBase(ABC):
         self._rect = pygame.Rect(x, y, width, height)
         
         self._value = None
-            
+
         self._onMouseClicked = onMouseClicked
         self._onMouseClickedArgs = onMouseClickedArgs
         
@@ -32,6 +34,8 @@ class WidgetBase(ABC):
         self._onMouseMovedArgs = onMouseMovedArgs
         
         self._show = True
+
+        WidgetManager.addWidget(self)
         pass
 
     def _doesCollide(self, x, y):
@@ -56,4 +60,3 @@ class WidgetBase(ABC):
     @abstractmethod
     def draw(self):
         pass
-    

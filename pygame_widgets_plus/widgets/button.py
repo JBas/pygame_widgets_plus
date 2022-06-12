@@ -14,7 +14,6 @@ class Button(WidgetBase):
 
         self._isPressed = False
         self._isHovered = False
-        self._hasRun = False
 
         self._font = pygame.font.Font('freesansbold.ttf', 12)
         self._text = kwargs.get("text", "Button")
@@ -24,16 +23,17 @@ class Button(WidgetBase):
 
         self._defaultColor = input2Color(kwargs.get("defaultColor", "azure1"))
         self._hoverColor = input2Color(kwargs.get("hoverColor", "azure2"))
-        self._pressColor = input2Color(kwargs.get("pressColor", "azure3"))
+        self._pressColor = input2Color(kwargs.get("pressColor", "red"))
 
         self._borderWidth = kwargs.get("borderWidth", 1)
         self._borderRadius = kwargs.get("borderRadius", 10)
         self._borderColor = input2Color(kwargs.get("borderColor", "cadetblue3"))
 
     def update(self):
+        
         if self._doesCollide(MouseHandler.mouseX, MouseHandler.mouseY):
             self._isHovered = True
-            if (MouseHandler.state == MouseState.MOUSEBUTTONDOWN):
+            if (MouseHandler.state == MouseState.MOUSECLICK):
                 self._isPressed = True
             else:
                 self._isPressed = False
@@ -41,15 +41,10 @@ class Button(WidgetBase):
             self._isHovered = False
             self._isPressed = False
 
-        
+        # print(self._isHovered, self._isPressed)
 
-        # @TODO: move this functionality to WidgetBase
-        if self._isPressed and self._onMousePressed and not self._hasRun:
-            self._onMousePressed(self._onMousePressedArgs)
-            self._hasRun = True
-
-        if not self._isPressed:
-            self._hasRun = False
+        if self._isPressed and self._onMouseClicked:
+            self._onMouseClicked(self._onMouseClickedArgs)
     
     def draw(self):
         c = self._defaultColor
