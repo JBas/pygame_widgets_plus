@@ -18,7 +18,7 @@ if __name__=="__main__":
     screen = pygame.display.set_mode((600, 400))
     clock = pygame.time.Clock()
 
-    b = Button(screen, 20, 20, 100, 100, text="Button", defaultColor="purple", hoverColor="orange", pressColor="black", borderWidth=3, onMousePressed=output)
+    b = Toggle(screen, 20, 20, 100, 50)
 
     # main game loop
     done = 0
@@ -27,13 +27,12 @@ if __name__=="__main__":
 
         EventManager.update(pygame.event.get())
 
-        
         b.update()
         b.draw()
 
         pygame.display.flip()
         
-        clock.tick(50)
+        clock.tick(60)
     pygame.quit()
 
     

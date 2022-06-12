@@ -34,6 +34,9 @@ class WidgetBase(ABC):
         self._show = True
         pass
 
+    def _doesCollide(self, x, y):
+        return self._rect.collidepoint(x, y)
+
     def show(self):
         self._show = True
 
@@ -45,10 +48,6 @@ class WidgetBase(ABC):
 
     def value(self, value):
         self._value = value
-
-    @abstractmethod
-    def doesCollide(self, x, y):
-        pass
 
     @abstractmethod
     def update(self):

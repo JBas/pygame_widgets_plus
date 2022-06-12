@@ -16,25 +16,22 @@ class Button(WidgetBase):
         self._isHovered = False
         self._hasRun = False
 
-        self._font = pygame.font.Font('freesansbold.ttf', 32)
-        self._text = kwargs.get("text", "")
+        self._font = pygame.font.Font('freesansbold.ttf', 12)
+        self._text = kwargs.get("text", "Button")
         self._renderedText = self._font.render(self._text, False, input2Color("black"))
         self._renderedTextRect = self._renderedText.get_rect()
         self._renderedTextRect.center = (x + width//2, y + height//2)
 
-        self._defaultColor = input2Color(kwargs.get("defaultColor", "green"))
-        self._hoverColor = input2Color(kwargs.get("hoverColor", "red"))
-        self._pressColor = input2Color(kwargs.get("pressColor", "blue"))
+        self._defaultColor = input2Color(kwargs.get("defaultColor", "azure1"))
+        self._hoverColor = input2Color(kwargs.get("hoverColor", "azure2"))
+        self._pressColor = input2Color(kwargs.get("pressColor", "azure3"))
 
-        self._borderWidth = kwargs.get("borderWidth", 0)
+        self._borderWidth = kwargs.get("borderWidth", 1)
         self._borderRadius = kwargs.get("borderRadius", 10)
-        self._borderColor = input2Color(kwargs.get("borderColor", "yellow"))
-
-    def doesCollide(self, x, y):
-        return self._rect.collidepoint(x, y)
+        self._borderColor = input2Color(kwargs.get("borderColor", "cadetblue3"))
 
     def update(self):
-        if self.doesCollide(MouseHandler.mouseX, MouseHandler.mouseY):
+        if self._doesCollide(MouseHandler.mouseX, MouseHandler.mouseY):
             self._isHovered = True
             if (MouseHandler.state == MouseState.MOUSEBUTTONDOWN):
                 self._isPressed = True
