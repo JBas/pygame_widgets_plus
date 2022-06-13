@@ -10,52 +10,53 @@ class MouseState(Enum):
     MOUSEBUTTONDOWN = auto()
     MOUSEDRAGGED = auto()
 
-class MouseHandler:
+class meta_MouseHandler(type):
+    def __init__(cls, *args, **kwargs):
+        cls._mouseX = -1
+        cls._mouseY = -1
     
-    _mouseX = None
-    _mouseY = None
-
-    _prevState = MouseState.MOUSEIDLE
-    _state = MouseState.MOUSEIDLE
-
-    _isUp = True
-
+        cls._prevState = MouseState.MOUSEIDLE
+        cls._state = MouseState.MOUSEIDLE
+        
     @property
-    def mouseX():
-        return MouseHandler._mouseX
+    def mouseX(cls):
+        return cls._mouseX
 
     @mouseX.setter
-    def mouseX(x):
-        MouseHandler._mouseX = x
+    def mouseX(cls, x):
+        cls._mouseX = x
 
     @property
-    def mouseY():
-        return MouseHandler._mouseY
+    def mouseY(cls):
+        return cls._mouseY
 
     @mouseY.setter
-    def mouseY(y):
-        MouseHandler._mouseY = y
+    def mouseY(cls, y):
+        cls._mouseY = y
 
     @property
-    def state():
-        return MouseHandler._state
+    def state(cls):
+        return cls._state
 
     @state.setter
-    def state(s):
-        MouseHandler._state = s
+    def state(cls, s):
+        cls._state = s
 
     @property
-    def prevState():
-        return MouseHandler._prevState
+    def prevState(cls):
+        return cls._prevState
 
     @prevState.setter
-    def prevState(p):
-        MouseHandler._prevState = p if (p != MouseState.MOUSEIDLE) else MouseHandler.prevState
+    def prevState(cls, p):
+        cls._prevState = p if (p != MouseState.MOUSEIDLE) else cls._prevState
+
+
+class MouseHandler(metaclass=meta_MouseHandler):
 
     def update(event):
-        (MouseHandler.mouseX, MouseHandler.mouseY) = pygame.mouse.get_pos()
 
         if event.type == pygame.MOUSEBUTTONUP:
+            (MouseHandler.mouseX, MouseHandler.mouseY) = event.pos
             if MouseHandler.prevState == MouseState.MOUSEBUTTONDOWN:
                 MouseHandler.prevState = MouseHandler.state
                 MouseHandler.state = MouseState.MOUSECLICK
@@ -64,13 +65,13 @@ class MouseHandler:
                 MouseHandler.state = MouseState.MOUSEBUTTONUP
                 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            
+            (MouseHandler.mouseX, MouseHandler.mouseY) = event.pos
             MouseHandler.prevState = MouseHandler.state
             MouseHandler.state = MouseState.MOUSEBUTTONDOWN
             
         elif event.type == pygame.MOUSEMOTION:
-
-            if (MouseHandler._prevState == MouseState.MOUSEBUTTONDOWN):
+            (MouseHandler.mouseX, MouseHandler.mouseY) = event.pos
+            if (MouseHandler.prevState == MouseState.MOUSEBUTTONDOWN):
                 MouseHandler.prevState = MouseHandler.state
                 MouseHandler.state = MouseState.MOUSEDRAGGED
             else:

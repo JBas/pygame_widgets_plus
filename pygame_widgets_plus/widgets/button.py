@@ -12,6 +12,7 @@ class Button(WidgetBase):
                          kwargs.get("onMouseReleased", None), kwargs.get("onMouseReleasedArgs", self),
                          kwargs.get("onMouseMoved", None), kwargs.get("onMouseMovedArgs", self))
 
+        self._isClicked = False
         self._isPressed = False
         self._isHovered = False
 
@@ -34,16 +35,21 @@ class Button(WidgetBase):
         if self._doesCollide(MouseHandler.mouseX, MouseHandler.mouseY):
             self._isHovered = True
             if (MouseHandler.state == MouseState.MOUSECLICK):
+                self._isClicked = True
+                self._isPressed = True
+            elif (MouseHandler.state == MouseState.MOUSEBUTTONDOWN):
                 self._isPressed = True
             else:
+                self._isClicked = False
                 self._isPressed = False
         else:
             self._isHovered = False
+            self._isClicked = False
             self._isPressed = False
 
         # print(self._isHovered, self._isPressed)
 
-        if self._isPressed and self._onMouseClicked:
+        if self._isClicked and self._onMouseClicked:
             self._onMouseClicked(self._onMouseClickedArgs)
     
     def draw(self):
