@@ -18,7 +18,7 @@ if __name__=="__main__":
     screen = pygame.display.set_mode((600, 400))
     clock = pygame.time.Clock()
 
-    b = Slider(screen, 300, 200, 200, 50)
+    b = Slider(screen, 300, 200, 100, 50, value=5)
 
     # main game loop
     done = 0
