@@ -14,17 +14,16 @@ class MultipleChoice(WidgetBase):
                          kwargs.get("onMouseMoved", None), kwargs.get("onMouseMovedArgs", self))
         self._style = kwargs.get("style", "circle")
         self._offset = y
-        self._options = []
 
     def option(self, text="option"):
-        self._options.append(Option(self._surface, self._x, self._offset, style=self._style))
+        self._children.append(Option(self._surface, self._x, self._offset, style=self._style))
         self._offset += 5
 
     def update(self):
-        for o in self._options:
+        for o in self._children:
             if (o.doesCollide(MouseHandler.mouseX, MouseHandler.mouseY) and (MouseHandler.state == MouseState.MOUSECLICK)):
                 o.active = not o.active
 
     def draw(self):
-        for o in self._options:
+        for o in self._children:
             o.draw()

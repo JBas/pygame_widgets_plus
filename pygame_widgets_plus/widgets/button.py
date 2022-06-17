@@ -6,11 +6,13 @@ import pygame.draw
 
 class Button(WidgetBase):
     def __init__(self, surface, x, y, width, height, **kwargs):
-        super().__init__(surface, x, y, width, height,
+        super().__init__(surface, x, y, width, height, True,
                          kwargs.get("onMouseClicked", None), kwargs.get("onMouseClickedArgs", self),
                          kwargs.get("onMousePressed", None), kwargs.get("onMousePressedArgs", self),
                          kwargs.get("onMouseReleased", None), kwargs.get("onMouseReleasedArgs", self),
                          kwargs.get("onMouseMoved", None), kwargs.get("onMouseMovedArgs", self))
+
+        self._rect.center = (x, y)
 
         self._isClicked = False
         self._isPressed = False
@@ -20,7 +22,7 @@ class Button(WidgetBase):
         self._text = kwargs.get("text", "Button")
         self._renderedText = self._font.render(self._text, False, input2Color("black"))
         self._renderedTextRect = self._renderedText.get_rect()
-        self._renderedTextRect.center = (x + width//2, y + height//2)
+        self._renderedTextRect.center = self._rect.center
 
         self._defaultColor = input2Color(kwargs.get("defaultColor", "azure1"))
         self._hoverColor = input2Color(kwargs.get("hoverColor", "azure2"))

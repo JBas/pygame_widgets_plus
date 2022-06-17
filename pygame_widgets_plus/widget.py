@@ -5,7 +5,7 @@ from pygame_widgets_plus.manager import WidgetManager
 import pygame
 
 class WidgetBase(ABC):
-    def __init__(self, surface, x, y, width, height,
+    def __init__(self, surface, x, y, width, height, isTopLevelParent=True,
                  onMouseClicked=None, onMouseClickedArgs=None,
                  onMousePressed=None, onMousePressedArgs=None,
                  onMouseReleased=None, onMouseReleasedArgs=None,
@@ -35,7 +35,13 @@ class WidgetBase(ABC):
         
         self._show = True
 
-        WidgetManager.addWidget(self)
+        self._isTopLevelParent = isTopLevelParent
+        
+        if (isTopLevelParent):
+            self._children = []
+            WidgetManager.addWidget(self)
+        else:
+            self._children = None
         pass
 
     def _doesCollide(self, x, y):

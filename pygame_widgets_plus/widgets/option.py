@@ -1,18 +1,19 @@
+from pygame_widgets_plus.widget import WidgetBase
 from pygame_widgets_plus.mouse import MouseHandler, MouseState
 from pygame_widgets_plus.helpers import input2Color
 
 import pygame.draw
 
 
-class Option():
+class Option(WidgetBase):
 
     def __init__(self, surface, x, y, size=10, style="square"):
+        super().__init__(surface, x, y, size, size, isTopLevelParent=False)
         self._surface = surface
         self._x = y
         self._y = y
         self._size = size
 
-        self._rect = pygame.Rect(0, 0, size, size)
         self._rect.center = (x, y)
 
         self._active = False

@@ -1,12 +1,13 @@
 from pygame_widgets_plus.widget import WidgetBase
 from pygame_widgets_plus.mouse import MouseHandler, MouseState
-from pygame_widgets_plus.helpers import input2Color
+from pygame_widgets_plus.helpers import input2Color, ASSERT
 
 import pygame.draw
 
 class Slider(WidgetBase):
     def __init__(self, surface, x, y, width, height, **kwargs):
-        super().__init__(surface, x, y, width, height,
+        
+        super().__init__(surface, x, y, width, height, True,
                          kwargs.get("onMouseClicked", None), kwargs.get("onMouseClickedArgs", self),
                          kwargs.get("onMousePressed", None), kwargs.get("onMousePressedArgs", self),
                          kwargs.get("onMouseReleased", None), kwargs.get("onMouseReleasedArgs", self),
@@ -57,6 +58,7 @@ class Slider(WidgetBase):
             if (MouseHandler.state == MouseState.MOUSEBUTTONDOWN):
                 self._active = True
         if (MouseHandler.state == MouseState.MOUSEBUTTONUP):
+                print("button up!")
                 self._active = False
             
         if self._active:       
@@ -71,7 +73,7 @@ class Slider(WidgetBase):
         self._barRectProgress.right = self._handleRect.centerx
 
         self._value = self._calcValueFromPos()
-        print(self._value)
+        # print(self._value)
 
     def draw(self):
         c = (150, 150, 150)

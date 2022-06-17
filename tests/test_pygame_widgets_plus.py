@@ -3,14 +3,7 @@ from pygame_widgets_plus import *
 def output(self):
     print("WooHoo!")
 
-def test_version():
-    assert __version__ == '0.1.0'
-
-def test_button():
-    b = Button()
-    assert type(b) == Button
-
-if __name__=="__main__":
+def main():
     import pygame
     
     pygame.init()
@@ -18,7 +11,9 @@ if __name__=="__main__":
     screen = pygame.display.set_mode((600, 400))
     clock = pygame.time.Clock()
 
-    b = Slider(screen, 300, 200, 100, 50, value=5)
+    button = Button(screen, 50, 25, 100, 50)
+    slider = Slider(screen, 50, 75, 100, 50)
+    toggle = Toggle(screen, 50, 125, 50, 50)
 
     # main game loop
     done = 0
@@ -36,4 +31,4 @@ if __name__=="__main__":
     pygame.quit()
 
     
-    
+main()
