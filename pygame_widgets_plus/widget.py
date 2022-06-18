@@ -12,13 +12,8 @@ class WidgetBase(ABC):
                  onMouseMoved=None, onMouseMovedArgs=None):
         super().__init__()
         self._surface = surface
-        self._x = x
-        self._y = y
-        self._width = width
-        self._height = height
-
         self._rect = pygame.Rect(x, y, width, height)
-        
+        self._rect.center = (x, y)
         self._value = None
 
         self._onMouseClicked = onMouseClicked

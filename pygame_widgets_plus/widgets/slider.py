@@ -17,8 +17,6 @@ class Slider(WidgetBase):
         self._max = kwargs.get("max", 10)
         self._value = kwargs.get("value", 5)
         self._step = kwargs.get("step", 1)
-        
-        self._rect.center = (x, y)
 
         self._barRect = pygame.Rect(x, y, width, height//6)
         self._barRect.center = (x, y)
@@ -31,6 +29,14 @@ class Slider(WidgetBase):
         self._handleRect.center = self._calcPosFromValue()
         
         self._active = False
+
+    @property
+    def active(self):
+        return self._active
+
+    @active.setter
+    def active(self, a):
+        self._active = a
         
 
     def _doesCollide(self, x, y):
@@ -56,12 +62,11 @@ class Slider(WidgetBase):
     def update(self):
         if self._doesCollide(MouseHandler.mouseX, MouseHandler.mouseY):
             if (MouseHandler.state == MouseState.MOUSEBUTTONDOWN):
-                self._active = True
+                self.active = True
         if (MouseHandler.state == MouseState.MOUSEBUTTONUP):
-                print("button up!")
-                self._active = False
+                self.active = False
             
-        if self._active:       
+        if self.active:       
             if MouseHandler.mouseX >= self._barRect.right:
                 self._handleRect.centerx = self._barRect.right
             elif MouseHandler.mouseX <= self._barRect.left:
@@ -77,11 +82,11 @@ class Slider(WidgetBase):
 
     def draw(self):
         c = (150, 150, 150)
-        if self._active:
+        if self.active:
             c = (80, 80, 255)
         
-        pygame.draw.rect(self._surface, (100, 100, 100), self._barRect, border_radius=20)
-        pygame.draw.rect(self._surface, (100, 100, 255), self._barRectProgress, border_radius=20, border_top_right_radius=0, border_bottom_right_radius=0)
+        pygame.draw.rect(self._surface, (100, 100, 100), self._barRect, border_radius=50)
+        pygame.draw.rect(self._surface, (100, 100, 255), self._barRectProgress, border_radius=50, border_top_right_radius=0, border_bottom_right_radius=0)
         pygame.draw.circle(self._surface, c, self._handleRect.center, self._handleRadius)
         pygame.draw.circle(self._surface, (255, 255, 255), self._handleRect.center, self._handleRadius, width=3)
         pygame.draw.circle(self._surface, (210, 210, 210), self._handleRect.center, self._handleRadius, width=1)

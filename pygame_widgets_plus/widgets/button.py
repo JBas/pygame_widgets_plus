@@ -12,8 +12,6 @@ class Button(WidgetBase):
                          kwargs.get("onMouseReleased", None), kwargs.get("onMouseReleasedArgs", self),
                          kwargs.get("onMouseMoved", None), kwargs.get("onMouseMovedArgs", self))
 
-        self._rect.center = (x, y)
-
         self._isClicked = False
         self._isPressed = False
         self._isHovered = False

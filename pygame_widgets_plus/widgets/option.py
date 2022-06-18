@@ -10,11 +10,6 @@ class Option(WidgetBase):
     def __init__(self, surface, x, y, size=10, style="square"):
         super().__init__(surface, x, y, size, size, isTopLevelParent=False)
         self._surface = surface
-        self._x = y
-        self._y = y
-        self._size = size
-
-        self._rect.center = (x, y)
 
         self._active = False
 
@@ -39,8 +34,8 @@ class Option(WidgetBase):
         c = (100, 100, 100)
         if (self.active):
             c = (0, 0, 240)
-            pygame.draw.circle(self._surface, c, self._rect.center, self._size//2)
-        pygame.draw.circle(self._surface, c, self._rect.center, self._size, width=3)
+            pygame.draw.circle(self._surface, c, self._rect.center, self._rect.width//2)
+        pygame.draw.circle(self._surface, c, self._rect.center, self._rect.width, width=3)
 
     def drawSquare(self):
         c = (100, 100, 100)
