@@ -15,14 +15,12 @@ class Slider(WidgetBase):
 
         self._min = kwargs.get("min", 0)
         self._max = kwargs.get("max", 10)
-        self._value = kwargs.get("value", 5)
+        self._value = kwargs.get("value", (self._max-self._min)/2)
         self._step = kwargs.get("step", 1)
 
         self._barRect = pygame.Rect(x, y, width, height//6)
         self._barRect.center = (x, y)
         self._barRectProgress = self._barRect.copy()
-
-        self._physDist = self._barRect.right - self._barRect.left
 
         self._handleRadius = height // 4
         self._handleRect = pygame.Rect(x, y, self._handleRadius*2, self._handleRadius*2)
@@ -43,21 +41,14 @@ class Slider(WidgetBase):
         return self._handleRect.collidepoint(x, y)
 
     # @TODO: needs to get fixed
-    def _calcPosFromValue(self):
-        d = self._max - self._min + 1
-        f = self._value / d
-
-        x = self._barRect.left + self._physDist*f
-
-        return (x, self._barRect.centery)
-        
+    def _calcValueFromPos(self):
+        # linear  (barRect.left, min) and (barRect.right, max)
+        return (self._max - self._min)*self._handleRect.centerx/(self._barRect.right - self._barRect.left) + self._min
 
     # @TODO: needs to get fixed
-    def _calcValueFromPos(self):
-        valDist = self._handleRect.centerx - self._barRect.left
-        f = 1 - (self._physDist - valDist) / self._physDist
-        
-        return (self._max - self._min + 1)*f
+    def _calcPosFromValue(self):
+        # linear  (min, barRect.left) and (max, barRect.right)
+        return ((self._barRect.right - self._barRect.left)*self._value/(self._max - self._min) + self._barRect.left, self._barRect.centery)
 
     def update(self):
         if self._doesCollide(MouseHandler.mouseX, MouseHandler.mouseY):
@@ -78,16 +69,17 @@ class Slider(WidgetBase):
         self._barRectProgress.right = self._handleRect.centerx
 
         self._value = self._calcValueFromPos()
-        # print(self._value)
+        print(self._value)
 
     def draw(self):
-        c = (150, 150, 150)
-        if self.active:
-            c = (80, 80, 255)
-        
-        pygame.draw.rect(self._surface, (100, 100, 100), self._barRect, border_radius=50)
-        pygame.draw.rect(self._surface, (100, 100, 255), self._barRectProgress, border_radius=50, border_top_right_radius=0, border_bottom_right_radius=0)
-        pygame.draw.circle(self._surface, c, self._handleRect.center, self._handleRadius)
-        pygame.draw.circle(self._surface, (255, 255, 255), self._handleRect.center, self._handleRadius, width=3)
-        pygame.draw.circle(self._surface, (210, 210, 210), self._handleRect.center, self._handleRadius, width=1)
+        if self._show:
+            c = (150, 150, 150)
+            if self.active:
+                c = (80, 80, 255)
+            
+            pygame.draw.rect(self._surface, (100, 100, 100), self._barRect, border_radius=50)
+            pygame.draw.rect(self._surface, (100, 100, 255), self._barRectProgress, border_radius=50, border_top_right_radius=0, border_bottom_right_radius=0)
+            pygame.draw.circle(self._surface, c, self._handleRect.center, self._handleRadius)
+            pygame.draw.circle(self._surface, (255, 255, 255), self._handleRect.center, self._handleRadius, width=3)
+            pygame.draw.circle(self._surface, (210, 210, 210), self._handleRect.center, self._handleRadius, width=1)
         pass

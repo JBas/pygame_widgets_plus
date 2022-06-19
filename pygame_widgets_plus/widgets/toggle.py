@@ -27,6 +27,7 @@ class Toggle(Slider):
         if self._doesCollide(MouseHandler.mouseX, MouseHandler.mouseY):
             if (MouseHandler.state == MouseState.MOUSEBUTTONDOWN):
                 self.active = not self.active
+                
 
         if self.active:
             if self._onMouseClicked:

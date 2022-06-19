@@ -7,7 +7,7 @@ import pygame.draw
 
 class Option(WidgetBase):
 
-    def __init__(self, surface, x, y, size=10, style="square"):
+    def __init__(self, surface, x, y, size=10, style="circle"):
         super().__init__(surface, x, y, size, size, isTopLevelParent=False)
         self._surface = surface
 

@@ -1,6 +1,6 @@
 from pygame import Color
 
-DEBUG = True
+DEBUG = False
 
 def input2Color(c):
     if (type(c) == int) and (0 <= c) and (255 >= c):
@@ -11,3 +11,7 @@ def input2Color(c):
 def ASSERT(statement):
     if DEBUG:
         assert statement
+
+def PRINT(statement, **kwargs):
+    if DEBUG:
+        print(statement, end=kwargs.get("end", "\n"))

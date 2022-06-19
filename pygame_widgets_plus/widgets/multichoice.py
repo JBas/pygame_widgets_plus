@@ -15,17 +15,34 @@ class MultipleChoice(WidgetBase):
         self._style = kwargs.get("style", "circle")
         self._offsetX = 10
         self._offsetY = 0
+        self._optionMask = 0x0
 
     def option(self, text="option"):
-        self._children.append(Option(self._surface, self._rect.left + self._offsetX, self._rect.top + self._offsetY, style=self._style))
+        self._children.append(Option(self._surface, self._rect.left + self._offsetX, self._rect.top + self._offsetY + 10, style=self._style))
         self._offsetY += 20
 
     def update(self):
-        for o in self._children:
-            if (o.doesCollide(MouseHandler.mouseX, MouseHandler.mouseY) and (MouseHandler.state == MouseState.MOUSECLICK)):
-                o.active = not o.active
+        pass
+        # old = None
+        
+        # for o in self._children:
+        #     bitmask = (bitmask | 1) << 1
+            
+        #     if o.active:
+        #         old = o
+            
+        #     if (o.doesCollide(MouseHandler.mouseX, MouseHandler.mouseY) and (MouseHandler.state == MouseState.MOUSEBUTTONDOWN)):
+        #         o.active = True
+        #         old = None
+        #     else:
+        #         o.active = False
+
+        # if old:
+        #     old.active = True
+        
 
     def draw(self):
-        pygame.draw.rect(self._surface, (200, 200, 200), self._rect)
-        for o in self._children:
-            o.draw()
+        if self._show:
+            pygame.draw.rect(self._surface, (200, 200, 200), self._rect)
+            for o in self._children:
+                o.draw()

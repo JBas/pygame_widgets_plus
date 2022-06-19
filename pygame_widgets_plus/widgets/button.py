@@ -53,15 +53,16 @@ class Button(WidgetBase):
             self._onMouseClicked(self._onMouseClickedArgs)
     
     def draw(self):
-        c = self._defaultColor
-
-        if self._isPressed:
-            c = self._pressColor
-        elif self._isHovered:
-            c = self._hoverColor
-
-        pygame.draw.rect(self._surface, c, self._rect, border_radius=self._borderRadius)
-        if self._borderWidth:
-            pygame.draw.rect(self._surface, self._borderColor, self._rect, border_radius=self._borderRadius, width=self._borderWidth)
-
-        self._surface.blit(self._renderedText, self._renderedTextRect)
+        if self._show:
+            c = self._defaultColor
+    
+            if self._isPressed:
+                c = self._pressColor
+            elif self._isHovered:
+                c = self._hoverColor
+    
+            pygame.draw.rect(self._surface, c, self._rect, border_radius=self._borderRadius)
+            if self._borderWidth:
+                pygame.draw.rect(self._surface, self._borderColor, self._rect, border_radius=self._borderRadius, width=self._borderWidth)
+    
+            self._surface.blit(self._renderedText, self._renderedTextRect)
